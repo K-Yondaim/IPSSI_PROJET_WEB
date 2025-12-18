@@ -57,21 +57,7 @@ function App() {
       <header className="App-header">
 
         <section style={{ marginBottom: '3rem', border: '2px solid #61dafb', padding: '1rem', borderRadius: '8px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <h3>Liste des utilisateurs (MySQL)</h3>
-            <button onClick={() => {
-              axios.get('http://localhost:8000/populate')
-                .then(res => {
-                  alert(res.data);
-                  // Refresh list
-                  axios.get('http://localhost:8000/users')
-                    .then(res => setUsers(res.data));
-                })
-                .catch(err => console.error(err));
-            }}>
-              Générer Utilisateurs +
-            </button>
-          </div>
+          <h3>Liste des utilisateurs (MySQL)</h3>
           {users.map(u => <p key={u.id}>{u.name}</p>)}
 
           <form onSubmit={handleQuery} style={{ marginTop: '1rem' }}>
