@@ -13,7 +13,7 @@ function App() {
     axios.get('http://localhost:8000/users')
       .then(res => setUsers(res.data))
       .catch(err => console.error(err.message));
-    
+
     loadComments();
   }, []);
 
@@ -29,10 +29,10 @@ function App() {
   const handleQuery = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8000/user', `SELECT id, name FROM users WHERE id = ${queryId}`, 
+      const response = await axios.post('http://localhost:8000/user', `SELECT id, name FROM users WHERE id = ${queryId}`,
         {
-          headers : {
-            "Content-Type" : 'text/plain'
+          headers: {
+            "Content-Type": 'text/plain'
           }
         }
       );
@@ -61,9 +61,23 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        
+
         <section style={{ marginBottom: '3rem', border: '2px solid #61dafb', padding: '1rem', borderRadius: '8px' }}>
-          <h3>Users IDs in SQLite</h3>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <h3>Users IDs in MySQL</h3>
+            <button onClick={() => {
+              axios.get('http://localhost:8000/populate')
+                .then(res => {
+                  alert(res.data);
+                  // Refresh list
+                  axios.get('http://localhost:8000/users')
+                    .then(res => setUsers(res.data));
+                })
+                .catch(err => console.error(err));
+            }}>
+              Générer Utilisateurs +
+            </button>
+          </div>
           {users.map(u => <p key={u.id}>{u.id}</p>)}
 
           <form onSubmit={handleQuery} style={{ marginTop: '1rem' }}>
@@ -90,15 +104,15 @@ function App() {
         </section>
 
         <section style={{ border: '2px solid #ff6b6b', padding: '1rem', borderRadius: '8px' }}>
-          
+
           <form onSubmit={handleCommentSubmit} style={{ marginTop: '1rem' }}>
             <textarea
               placeholder="Enter your comment"
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
-              style={{ 
-                width: '80%', 
-                height: '80px', 
+              style={{
+                width: '80%',
+                height: '80px',
                 marginBottom: '0.5rem',
                 padding: '0.5rem',
                 fontSize: '1rem'
@@ -115,18 +129,18 @@ function App() {
               <p>No comments yet. TYPE ONE NOW !</p>
             ) : (
               comments.map(comment => (
-                <div 
-                    key={comment.id} 
-                    style={{ 
-                      background: '#282c34', 
-                      padding: '1rem', 
-                      marginBottom: '1rem', 
-                      borderRadius: '4px',
-                      border: '1px solid #444'
-                    }}
-                  >
-                    {comment.content}
-                  </div>
+                <div
+                  key={comment.id}
+                  style={{
+                    background: '#282c34',
+                    padding: '1rem',
+                    marginBottom: '1rem',
+                    borderRadius: '4px',
+                    border: '1px solid #444'
+                  }}
+                >
+                  {comment.content}
+                </div>
               ))
             )}
           </div>
