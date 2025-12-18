@@ -18,12 +18,18 @@ const getUsers = async (req, res) => {
     }
 };
 
-// Replaces the insecure /user and /query endpoints
+const getUserById = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const users = await userService.getUserById(id);
+        res.json(users);
+    } catch (err) {
+        res.status(500).send('Database error');
+    }
+};
+
 const createUser = async (req, res) => {
     try {
-        // If content-type is text/plain (unlikely given my app.use(json)), express might parse differently.
-        // Supporting both JSON object and assuming maybe the body IS the param?
-        // Let's assume standardized JSON {name, password}
         const user = await userService.createUser(req.body);
         res.json(user);
     } catch (err) {
@@ -31,7 +37,6 @@ const createUser = async (req, res) => {
     }
 };
 
-// Fallback for the old raw query endpoint - blocking it
 const legacyQuery = async (req, res) => {
     res.status(403).send("This endpoint has been disabled for security reasons.");
 };
@@ -39,6 +44,7 @@ const legacyQuery = async (req, res) => {
 module.exports = {
     populateUsers,
     getUsers,
+    getUserById,
     createUser,
     legacyQuery
 };

@@ -29,13 +29,7 @@ function App() {
   const handleQuery = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8000/user', `SELECT id, name FROM users WHERE id = ${queryId}`,
-        {
-          headers: {
-            "Content-Type": 'text/plain'
-          }
-        }
-      );
+      const response = await axios.get(`http://localhost:8000/users/${queryId}`);
       setQueriedUser(response.data);
     } catch (err) {
       console.error('Error querying user:', err.message);
@@ -64,7 +58,7 @@ function App() {
 
         <section style={{ marginBottom: '3rem', border: '2px solid #61dafb', padding: '1rem', borderRadius: '8px' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <h3>Users IDs in MySQL</h3>
+            <h3>Liste des utilisateurs (MySQL)</h3>
             <button onClick={() => {
               axios.get('http://localhost:8000/populate')
                 .then(res => {
@@ -78,7 +72,7 @@ function App() {
               Générer Utilisateurs +
             </button>
           </div>
-          {users.map(u => <p key={u.id}>{u.id}</p>)}
+          {users.map(u => <p key={u.id}>{u.name}</p>)}
 
           <form onSubmit={handleQuery} style={{ marginTop: '1rem' }}>
             <input
@@ -96,7 +90,7 @@ function App() {
               <h3>Queried User:</h3>
               {queriedUser.map(u => (
                 <p key={u.id}>
-                  ID: {u.id} — Name: {u.name} — Password: {u.password}
+                  ID: {u.id} — Name: {u.name}
                 </p>
               ))}
             </div>
