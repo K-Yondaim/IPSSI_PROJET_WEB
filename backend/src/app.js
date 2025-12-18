@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { initDb } = require('./config/db');
+const { initModels } = require('./models'); // ORM Init
 const userRoutes = require('./routes/userRoutes');
 const commentRoutes = require('./routes/commentRoutes');
 
@@ -8,12 +8,12 @@ const app = express();
 const port = 8000;
 
 // Middleware
-app.use(express.json()); // Using json parser instead of text for better API handling where possible, but supporting text if needed for backward compact.
-app.use(express.text()); // Keep text support if specific endpoints need it (like the original code might have implied), but usually JSON is best.
+app.use(express.json());
+app.use(express.text());
 app.use(cors());
 
-// Initialize Database Tables
-initDb();
+// Initialize Database Tables via ORM
+initModels();
 
 // Routes
 app.use('/api', userRoutes);     // Prefixing API routes is best practice
