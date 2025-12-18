@@ -30,4 +30,3 @@ Il suffit d'avoir **Docker Desktop** installé et lancé.
     ```
 3.  Accédez au site :
     -   **Site Web** : [http://localhost:3000](http://localhost:3000)
-    -   **Gestion BDD** : [http://localhost:8080](http://localhost:8080)
