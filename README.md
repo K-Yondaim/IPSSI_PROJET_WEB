@@ -2,7 +2,7 @@
 
 Ce projet a été mis à jour et sécurisé pour corriger des vulnérabilités et moderniser l'infrastructure.
 
-## 🛠 Ce qui a été fait
+##  Ce qui a été fait
 
 1.  **Docker** :
     -   Tout le projet tourne maintenant dans des "conteneurs" (Frontend, Backend, Base de données).
@@ -19,7 +19,7 @@ Ce projet a été mis à jour et sécurisé pour corriger des vulnérabilités e
 4.  **Architecture du code** :
     -   Le code a été séparé en plusieurs fichiers (Contrôleurs et Services) pour être plus clair et sécurisé (correction des failles d'injection SQL).
 
-## 🚀 Comment lancer le projet
+##  Comment lancer le projet
 
 Il suffit d'avoir **Docker Desktop** installé et lancé.
 
